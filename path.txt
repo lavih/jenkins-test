@@ -1,0 +1,9 @@
+#on centos vm
+/var/lib/jenkins
+
+#on docker container
+/var/jenkins_home
+
+
+#docker cli (client) sock
+/var/run/docker.sock

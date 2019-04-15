@@ -1,0 +1,22 @@
+FROM jenkins/jenkins
+USER root
+
+RUN mkdir -p /tmp/download && \
+ curl -L https://download.docker.com/linux/static/stable/x86_64/docker-18.03.1-ce.tgz | tar -xz -C /tmp/download && \
+ rm -rf /tmp/download/docker/dockerd && \
+ mv /tmp/download/docker/docker* /usr/local/bin/ && \
+ rm -rf /tmp/download && \
+ groupadd -g 980 docker && \
+ usermod -aG staff,docker jenkins
+
+user jenkins
+
+
+
+chown -R 1000:1000 /var/jenkins_home # or every path you opened your jenkins folder - and then map it to the container with -v
+## and make sure the docker group is 1000
+
+
+
+docker container run --name jenkins-docker-plugin -d -p 8081:8080 -p 50001:50000 -v /var/jenkins_home:/var/jenkins_home 
+-v /var/run/docker.sock:/var/run/docker.sock jenkins-docker

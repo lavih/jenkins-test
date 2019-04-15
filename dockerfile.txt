@@ -1,0 +1,13 @@
+# jenkins with NodeJS
+
+FROM jenkins:latest
+
+WORKDIR /app
+
+ADD . /app
+
+RUN npm install
+
+EXPOSE 50000 8080
+
+CMD npm start
